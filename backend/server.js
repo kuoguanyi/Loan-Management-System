@@ -1,26 +1,35 @@
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const loanRoutes = require("./routes/loanRoutes");
+const authRoutes = require("./routes/authRoutes");
+require("dotenv").config({ path: "./.env" });
 
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const connectDB = require('./config/db');
-
-dotenv.config();
-
-
+// ✅ 初始化 Express
 const app = express();
 
-app.use(cors());
+// ✅ 設定 CORS（開放給前端）
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    methods: "GET,POST,PUT,DELETE",
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+// ✅ 處理 JSON body
 app.use(express.json());
-app.use('/api/auth', require('./routes/authRoutes'));
-//app.use('/api/tasks', require('./routes/taskRoutes'));
 
-// Export the app object for testing
+// ✅ API 路由掛載
+app.use("/api/auth", authRoutes);
+app.use("/api/loans", loanRoutes);
+
+// ✅ 如果此檔案被直接執行（而非測試），才啟動伺服器
 if (require.main === module) {
-    connectDB();
-    // If the file is run directly, start the server
-    const PORT = process.env.PORT || 5001;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-  }
+  connectDB(); // 資料庫連線
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+}
 
-
-module.exports = app
+module.exports = app;
