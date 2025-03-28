@@ -6,7 +6,7 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
-// 註冊
+
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -30,7 +30,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-// 登入
+
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -52,7 +52,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-// 取得個人資料
+
 const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -69,7 +69,7 @@ const getProfile = async (req, res) => {
   }
 };
 
-// 更新個人資料
+
 const updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
