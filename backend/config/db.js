@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-require("dotenv").config({ path: "./.env" }); // 保險一點
+require("dotenv").config({ path: "./.env" }); 
 
 mongoose.set("strictQuery", true);
 
-console.log("🧪 使用的 MONGO_URI =", process.env.MONGO_URI); // 調試用
+console.log(" Using MONGO_URI =", process.env.MONGO_URI);
 
 const connectDB = async () => {
   try {
@@ -11,9 +11,9 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("✅ MongoDB 連線成功");
+    console.log(" MongoDB connected successfully");
   } catch (error) {
-    console.error("❌ MongoDB 連線錯誤:", error.message);
+    console.error(" ongoDB connection error:", error.message);
     process.exit(1);
   }
 };
