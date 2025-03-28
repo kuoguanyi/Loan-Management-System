@@ -1,7 +1,6 @@
 const User = require("../models/User");
 const Loan = require("../models/Loan");
 
-// 建立借款
 exports.createLoan = async (req, res) => {
   try {
     const loan = new Loan(req.body);
@@ -12,7 +11,6 @@ exports.createLoan = async (req, res) => {
   }
 };
 
-// 所有借款
 exports.getAllLoans = async (req, res) => {
   try {
     const loans = await Loan.find();
@@ -22,7 +20,6 @@ exports.getAllLoans = async (req, res) => {
   }
 };
 
-// 更新借款
 exports.updateLoan = async (req, res) => {
   try {
     const loan = await Loan.findByIdAndUpdate(req.params.id, req.body, {
@@ -34,7 +31,6 @@ exports.updateLoan = async (req, res) => {
   }
 };
 
-// 刪除借款
 exports.deleteLoan = async (req, res) => {
   try {
     await Loan.findByIdAndDelete(req.params.id);

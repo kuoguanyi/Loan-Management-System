@@ -6,7 +6,7 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "30d" });
 };
 
-// 註冊
+// ✅ 註冊
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
@@ -24,13 +24,11 @@ const registerUser = async (req, res) => {
       token: generateToken(user._id),
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Registration failed", error: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
-// 登入
+// ✅ 登入
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
@@ -52,7 +50,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-// 取得個人資料
+// ✅ 取得個人資料
 const getProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
@@ -63,23 +61,27 @@ const getProfile = async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
+      university: user.university,
+      address: user.address,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-// 更新個人資料
+// ✅ 更新個人資料
 const updateUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
 
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const { name, email } = req.body;
+    const { name, email, university, address } = req.body;
 
     user.name = name || user.name;
     user.email = email || user.email;
+    user.university = university || user.university;
+    user.address = address || user.address;
 
     const updatedUser = await user.save();
 
@@ -87,6 +89,7 @@ const updateUserProfile = async (req, res) => {
       id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      address: updatedUser.address,
       token: generateToken(updatedUser._id),
     });
   } catch (error) {
