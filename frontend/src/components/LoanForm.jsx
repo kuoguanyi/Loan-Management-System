@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../axiosConfig";
+import { toast } from "react-toastify";
 
 const LoanForm = ({ loans, setLoans, editingLoan, setEditingLoan }) => {
   const { user } = useAuth();
@@ -25,6 +26,15 @@ const LoanForm = ({ loans, setLoans, editingLoan, setEditingLoan }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      if (
+        !formData.borrowerName ||
+        !formData.amount ||
+        !formData.interestRate
+      ) {
+        toast.error("Please fill in all fields.");
+        return;
+      }
+
       if (editingLoan) {
         const response = await axiosInstance.put(
           `/api/loans/${editingLoan._id}`,
@@ -47,7 +57,7 @@ const LoanForm = ({ loans, setLoans, editingLoan, setEditingLoan }) => {
       setEditingLoan(null);
       setFormData({ borrowerName: "", amount: "", interestRate: "" });
     } catch (error) {
-      alert("Failed to save loan.");
+      toast.error("Failed to save loan.");
     }
   };
 

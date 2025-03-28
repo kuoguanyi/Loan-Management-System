@@ -18,7 +18,11 @@ const Loans = () => {
         const response = await axiosInstance.get("/api/loans", {
           headers: { Authorization: `Bearer ${user.token}` },
         });
-        setLoans(response.data);
+        setLoans(
+          response.data.sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          )
+        );
       } catch (error) {
         setError("❌ Failed to obtain loan information");
       } finally {

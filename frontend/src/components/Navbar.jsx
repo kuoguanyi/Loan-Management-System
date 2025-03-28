@@ -15,7 +15,9 @@ const Navbar = () => {
       <Link to="/" className="text-2xl font-bold">
         Loan Manager
       </Link>
-      <div>
+      <div className="flex items-center">
+        {user && <span className="text-white mr-4">Welcome, {user.name}</span>}
+
         {user ? (
           <>
             <Link to="/loans" className="mr-4">

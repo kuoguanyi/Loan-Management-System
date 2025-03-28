@@ -1,5 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import axiosInstance from "../axiosConfig";
+import { toast } from "react-toastify";
 
 const LoanList = ({ loans, setLoans, setEditingLoan }) => {
   const { user } = useAuth();
@@ -11,7 +12,7 @@ const LoanList = ({ loans, setLoans, setEditingLoan }) => {
       });
       setLoans(loans.filter((loan) => loan._id !== loanId));
     } catch (error) {
-      alert("Deletion failed");
+      toast.error("Deletion failed");
     }
   };
 
@@ -22,6 +23,7 @@ const LoanList = ({ loans, setLoans, setEditingLoan }) => {
           <h2 className="font-bold">{loan.borrowerName}</h2>
           <p>Amount: ${loan.amount}</p>
           <p>interest rate: {loan.interestRate}%</p>
+          <p>Status: {loan.status}</p>
           <div className="mt-2">
             <button
               onClick={() => setEditingLoan(loan)}
