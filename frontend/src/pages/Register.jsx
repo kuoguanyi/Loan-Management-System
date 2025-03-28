@@ -1,53 +1,40 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import axiosInstance from '../axiosConfig';
+import TaskForm from '../components/TaskForm';
+import TaskList from '../components/TaskList';
+import { useAuth } from '../context/AuthContext';
 
-const Register = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
-  const navigate = useNavigate();
+const Tasks = () => {
+  const { user } = useAuth();
+  const [tasks, setTasks] = useState([]);
+  const [editingTask, setEditingTask] = useState(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await axiosInstance.post('/api/auth/register', formData);
-      alert('Registration successful. Please log in.');
-      navigate('/login');
-    } catch (error) {
-      alert('Registration failed. Please try again.');
-    }
-  };
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axiosInstance.get('/api/tasks', {
+          headers: { Authorization: `Bearer ${user.token}` },
+        });
+        setTasks(response.data);
+      } catch (error) {
+        alert('Failed to fetch tasks.');
+      }
+    };
+
+    fetchTasks();
+  }, [user]);
 
   return (
-    <div className="max-w-md mx-auto mt-20">
-      <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded">
-        <h1 className="text-2xl font-bold mb-4 text-center">Register</h1>
-        <input
-          type="text"
-          placeholder="Name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-          className="w-full mb-4 p-2 border rounded"
-        />
-        <button type="submit" className="w-full bg-green-600 text-white p-2 rounded">
-          Register
-        </button>
-      </form>
+    <div className="container mx-auto p-6">
+      <TaskForm
+        tasks={tasks}
+        setTasks={setTasks}
+        editingTask={editingTask}
+        setEditingTask={setEditingTask}
+      />
+      <TaskList tasks={tasks} setTasks={setTasks} setEditingTask={setEditingTask} />
     </div>
   );
 };
 
-export default Register;
+export default Tasks;
