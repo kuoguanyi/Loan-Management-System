@@ -1,68 +1,50 @@
-# **Assignment: Full-Stack CRUD Application Development with DevOps Practices**
+# Loan Manager App
 
-## **Objective**
+A full-stack loan management application allowing users to register, login, create, view, update, and delete loan records. Built with **React**, **Node.js**, **Express**, and **MongoDB**.
 
-You have been provided with a starter project that includes user authentication using  **Node.js, React.js, and MongoDB**. Your task is to extend this application by implementing **CRUD (Create, Read, Update, Delete) operations** for a real-world application of your choice, while following industry best practices such as:
+---
 
-* **Project Management with JIRA**
-* **Requirement Diagram using SysML**
-* **Version Control using GitHub**
-* **CI/CD Integration for Automated Deployment**
+## Features
 
-## **Requirements**
+- User Registration and Login with JWT
+- CRUD for Loan Records (amount, interest, etc.)
+- Loan `status` display (Pending / Approved)
+- Toast notification for feedback
+- Date-sorted loans by `createdAt`
+- Welcome message after login
+- Form validation (required fields)
+- Secure routes (token protected)
 
-### **1. Choose a Real-World Application**
+---
 
-Select a meaningful use case for your CRUD operations. We will provide the list, you have to select it.
+## Tech Stack
 
-### **2. Project Management with JIRA and SysML**
+| Layer        | Technology                 |
+| ------------ | -------------------------- |
+| Frontend     | React (Vite), TailwindCSS  |
+| Backend      | Node.js, Express           |
+| Database     | MongoDB (Mongoose)         |
+| Auth         | JWT (JSON Web Token)       |
+| CI/CD        | GitHub Actions             |
+| Project Mgmt | JIRA                       |
+| Diagrams     | Draw.io (SysML + Use Case) |
 
-* Create a **JIRA project** and define:
-  * **Epic**
-  * **User Stories** (features required in your app)
-  * **Child issues & Subtasks** (breaking down development work)
-  * **Sprint Planning** (organizing work into milestones)
-* Document your JIRA **board URL** in the project README.
-* Draw a requirements diagram
+---
 
-### **3. Backend Development (Node.js + Express + MongoDB)**
+## Installation
 
-* Create a user-friendly interface to interact with your API (Some portion developed, follow task manager app)).
-* Implement **forms** for adding and updating records.
-* Display data using  **tables, cards, or lists (Follow how we showed data in task manager app)**
+```bash
+# Clone repo
+git clone https://github.com/your-username/sdlapps-main.git
+cd sdlapps-main
 
-### **4. Frontend Development (React.js)**
+# Backend
+cd backend
+npm install
+cp .env.example .env  # Update MongoDB_URI
+npm run dev
 
-* Create a user-friendly interface to interact with your API (**Some portion developed, follow task manager app)**.
-* Implement **forms** for adding, showing, deleting and updating records (CRUD).
-* Display data using  **tables, cards, or lists (Follow how we showed data in task manager app)**
-
-### **5. Authentication & Authorization**
-
-* Ensure **only authenticated users** can access and perform CRUD operations. (Already developed in your project)
-* Use **JWT (JSON Web Tokens)** for user authentication (Use the task manager one from .env file).
-
-### **6. GitHub Version Control & Branching Strategy**
-
-* Use **GitHub for version control** and maintain:
-  * `main` branch (stable production-ready code)
-  * Feature branches (`feature/xyz`) for each new functionality
-* Follow proper **commit messages** and  **pull request (PR) reviews** .
-
-### **7. CI/CD Pipeline Setup**
-
-* Implement a **CI/CD pipeline using GitHub Actions** to:
-  * Automatically **run tests** on every commit/pull request (Optional).
-  * Deploy the **backend** to **AWS** .
-  * Deploy the **frontend** to **AWS**.
-* Document your  **CI/CD workflow in the README** .
-
-## **Submission Requirements**
-
-* **JIRA Project Board URL** (user stories ).
-* **Requirment diagram** (Using project features)
-* **GitHub Repository** (`backend/` and `frontend/`).
-* **README.md** with:
-
-  * Project setup instructions.
-  * CI/CD pipeline details.
+# Frontend
+cd ../frontend
+npm install
+npm start
