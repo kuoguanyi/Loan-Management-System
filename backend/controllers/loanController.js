@@ -1,4 +1,5 @@
-const User = require("../models/User"); // ✅ 正確的使用者模型
+const User = require("../models/User");
+const Loan = require("../models/Loan");
 
 // 建立借款
 exports.createLoan = async (req, res) => {
